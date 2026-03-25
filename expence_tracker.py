@@ -20,6 +20,10 @@ def save_data(expences):
         json.dump(expences, file, indent=4)
         
 
+def clear_storage(expences):
+    expences.clear()
+    save_data(expences)
+    print("All saved data cleared")
 
 
 def add_expence(expences):
@@ -35,7 +39,7 @@ def add_expence(expences):
             if exists:
                 print(f"ID {expence_id} exists. Try again!")
                 continue
-            else:
+            else:!
                 break
         except ValueError:
             print("Enter a valid ID")
@@ -45,6 +49,11 @@ def add_expence(expences):
         if name:
             break
         print("Name cannot be empty!")
+    while True:
+        category = input("Enter category: ")
+        if category:
+            break
+        print("Category cannot be empty!")
     while True:
         try:
             amount = int(input(f"Enter amount for {name}:"))
@@ -70,6 +79,7 @@ def add_expence(expences):
     return{
         "id":expence_id,
         "name":name,
+        "category":category,
         "amount":amount,
         "date":date
     }
@@ -82,14 +92,15 @@ def view_expences(expences):
         return
     print("\n=== YOUR EXPENSES ===")
     for exp in expences:
-        print(f"ID: {exp['id']} | Name  {exp['name']} | Amount: {exp['amount']} | Date: {exp['date']}")
+        print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
 
 
 def search(expences):
     while True:
         print("1. Search by ID or Name: ")
         print("2. Search by Date: ")
-        print("3. Back")
+        print("3. Search by Category:")
+        print("4. Back")
             
         try:
             option = int(input("Enter an option 1,2,3: "))
@@ -99,6 +110,8 @@ def search(expences):
             elif option ==2:
                 search_by_date(expences)
             elif option ==3:
+                search_by_category(expences)
+            elif option ==4:
                 return
             else:
                 print("Choose either 1,2 or 3")
@@ -116,12 +129,12 @@ def search_expence(expences):
             if search.isdigit():
                 if int(search)==exp['id']:
                     
-                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']}| Amount: {exp['amount']} | Date: {exp['date']}")
                     found =True
             else:
                 if search in exp['name'].lower():
                     print("\n=== SEARCH RESULTS ===")  
-                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
                     found = True
         if not found:
             print("Expence not found")   
@@ -141,7 +154,7 @@ def search_by_date(expences):
             found = False
             for exp in expences:
                 if exp['date'] == target_date:
-                    print(f"ID: {exp['id']} | Name: {exp['name']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                    print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
                     found = True
             if not found:
                 print(f"Expence not found for date: {target_date}")
@@ -149,7 +162,30 @@ def search_by_date(expences):
         except ValueError:
             print("Enter a valid date! Try again")
 
+def search_by_category(expences):
+    while True:
+        search = input("Enter search category: ").lower() 
+        found=False
+    
+        for exp in expences:
+            if exp.get['category', 'uncategorised'].lower()== search:
+                print("=== SEARCH BY CATEGORY ===")
+                print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+            
+                found = True
+            
+        if not found:
+            print("No expence in this category")
+            
+        again = input("Search again yes/y no/n ?").lower().strip()
         
+        if again in ["yes", "y"]:
+            continue
+        elif again in ["no", "n"]:
+            return
+        else:
+            print("Type yes/y or no/n!")
+            
 
 
 def delete(expences):
@@ -246,7 +282,7 @@ def update_expence(expences):
                 found = True
 
             if found:
-                print(f"\nID: {exp['id']} | Name: {exp['name']} Amount:{exp['amount']} | Date: {exp['date']}")
+                print(f"\nID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} Amount:{exp['amount']} | Date: {exp['date']}")
 
                 print("\n1. Update Name")
                 print("2. Update Amount")
@@ -303,9 +339,11 @@ def update_expence(expences):
         
 def total(expences):
     while True:
+        print("\n ===TOTAL EXPENSES ===:")
         print("1. Total Overall: ")
         print("2. Total per date: ")
-        print("3. Back")
+        print("3. Total per category:")
+        print("4. Back")
         
         try:
             option = int(input("Enter an option: "))
@@ -314,6 +352,8 @@ def total(expences):
             elif option ==2:
                 total_per_date(expences)
             elif option ==3:
+                total_by_category(expences)
+            elif option ==4:
                 return
             else:
                 print("Enter an option 1,2 or 3: ")
@@ -357,8 +397,31 @@ def total_per_date(expences):
             print("Enter a valid date. Use format (YYYY-MM-DD)")
 
 
-
-
+def total_by_category(expences):
+    if not expences:
+        print("No expence made:")
+        return
+    while True:
+        category=input("Enter category:").lower().strip()
+        total = 0
+        found = False
+        
+        for exp in expences:
+            if exp['category'].lower()== category:
+                total+= exp['amount']
+                found =True
+                
+        if found:
+            print(f"Total expence for {category} is KSH {total}")
+        else:
+            print("No expence in this category")
+        again =input("Search again ? yes/y or no/n").lower().strip()
+        if again in ["yes", "y"]:
+            continue
+        elif again in ["no", "n"]:
+            return
+        else:
+            print("Enter yes/y or no/n!")
 
              
 expences = load_data()
@@ -371,7 +434,8 @@ def main():
     print("4. Delete :")
     print("5. Search :")
     print("6. Total  :")
-    print("7. Exit   :")
+    print("7. Clear All Data:")
+    print("8. Exit   :")
     
     try:
         option=int(input("Enter an option (1,2,3,4,5,6,7): "))
@@ -404,8 +468,11 @@ def main():
     elif option ==5:
         search(expences)
     elif option ==6:
+        view_expences(expences)
         total(expences)
     elif option ==7:
+        clear_storage(expences)
+    elif option ==8:
         return
     else:
         print("Enter a valid option")
