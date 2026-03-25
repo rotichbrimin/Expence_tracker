@@ -1,5 +1,6 @@
 
 import json
+import csv
 from datetime import datetime
 
 
@@ -26,6 +27,30 @@ def clear_storage(expences):
     print("All saved data cleared")
 
 
+def export_to_csv(expences):
+    if not expences:
+        print("No data to export")
+        return
+
+    with open("expenses.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+
+        # Header row
+        writer.writerow(["ID", "Name", "Category", "Amount", "Date"])
+
+        # Data rows
+        for exp in expences:
+            writer.writerow([
+                exp['id'],
+                exp['name'],
+                exp['category'],
+                exp['amount'],
+                exp['date']
+            ])
+
+    print("Data exported successfully to expenses.csv")
+    
+    
 def add_expence(expences):
     while True:
         try:
@@ -503,7 +528,8 @@ def main():
     print("6. Total  :")
     print("7. Clear  :")
     print("8. Sort   :")
-    print("9. Exit   :")
+    print("9. Export to CSV: ")
+    print("10. Exit   :")
     
     try:
         option=int(input("\nEnter an option (1,2,3,4,5,6,7): "))
@@ -542,7 +568,9 @@ def main():
         clear_storage(expences)
     elif option ==8:
         sort_menu(expences)
-    elif option ==9:
+    elif option == 9:
+        export_to_csv(expences)
+    elif option ==10:
         return
     else:
         print("Enter a valid option")
