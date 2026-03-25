@@ -39,7 +39,7 @@ def add_expence(expences):
             if exists:
                 print(f"ID {expence_id} exists. Try again!")
                 continue
-            else:!
+            else:
                 break
         except ValueError:
             print("Enter a valid ID")
@@ -168,7 +168,7 @@ def search_by_category(expences):
         found=False
     
         for exp in expences:
-            if exp.get['category', 'uncategorised'].lower()== search:
+            if exp['category'].lower()== search:
                 print("=== SEARCH BY CATEGORY ===")
                 print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
             
@@ -207,7 +207,9 @@ def delete(expences):
          
         except ValueError:
             print("Invalid option! Try again")
-            
+
+
+         
 def delete_expence(expences):
     if not expences:
         print("No expence to delete!")
@@ -251,6 +253,8 @@ def delete_expence(expences):
                 print("Enter yes/y no/n")
 
 
+
+
 def delete_all_expences(expences):
     confirm = input("!!! WARNING: Are you sure you want to delete ALL expenses? (yes/no): ").strip().lower()
     if confirm in ["yes", "y"]:
@@ -261,6 +265,8 @@ def delete_all_expences(expences):
         print("Deletion cancelled. Your data is safe.")
         
       
+
+
 
 def update_expence(expences):
     if not expences:
@@ -336,7 +342,9 @@ def update_expence(expences):
 
         if not found:
             print("Expense not found")                   
-        
+
+
+    
 def total(expences):
     while True:
         print("\n ===TOTAL EXPENSES ===:")
@@ -360,7 +368,9 @@ def total(expences):
                 
         except ValueError:
             print("Enter a valid option! Try again:")
-                
+
+
+              
 
 def total_spending(expences):
     if not expences:
@@ -397,6 +407,8 @@ def total_per_date(expences):
             print("Enter a valid date. Use format (YYYY-MM-DD)")
 
 
+
+
 def total_by_category(expences):
     if not expences:
         print("No expence made:")
@@ -423,7 +435,62 @@ def total_by_category(expences):
         else:
             print("Enter yes/y or no/n!")
 
-             
+
+def display_sorted(expences):
+    if not expences:
+        print("No expence to sort:")
+        return
+    print("=== SORTED LIST ===")
+    for exp in expences:
+        print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+
+
+
+def sort_menu(expences):
+    while True:
+        print("\n=== SORT MENU ===")
+        print("1. Sort by Amount (low to high: )")
+        print("2. Sort by Amount (high to low: )")
+        print("3. Sort by Name (A to Z): ")
+        print("4. Sort by Date (old to new): ")
+        print("5. Back: ")
+        
+        try:
+            option = int(input("Enter an option: "))
+        except ValueError:
+            print("Enter a valid option!")
+            
+        if option == 1:
+            sorted_list = sorted(expences, key = lambda exp : exp['amount'])
+            display_sorted(sorted_list)
+            
+        elif option == 2:
+            sorted_list = sorted(expences, key= lambda exp: exp['amount'], reverse = True)
+            display_sorted(sorted_list)
+            
+        elif option ==3:
+            sorted_list = sorted(expences, key = lambda exp: exp['name'].lower())
+            display_sorted(sorted_list)
+            
+        elif option == 4:
+            sorted_list = sorted(expences, key = lambda exp: exp['date'])
+            display_sorted(sorted_list)
+            
+        elif option == 5:
+            return
+            
+        else:
+           print("Enter an option 1,2,3,4,5")
+           
+        again = input("\nSort again? yes/y or no/n: ")
+        if again in ["yes", "y"]:
+            continue
+        elif again in ["no", "n"]:
+            return
+        else:
+            print("Enter yes/y or no/n!")
+
+            
 expences = load_data()
     
 def main():
@@ -434,11 +501,12 @@ def main():
     print("4. Delete :")
     print("5. Search :")
     print("6. Total  :")
-    print("7. Clear All Data:")
-    print("8. Exit   :")
+    print("7. Clear  :")
+    print("8. Sort   :")
+    print("9. Exit   :")
     
     try:
-        option=int(input("Enter an option (1,2,3,4,5,6,7): "))
+        option=int(input("\nEnter an option (1,2,3,4,5,6,7): "))
     except ValueError:
         print("Enter a valid option!")
         return
@@ -473,6 +541,8 @@ def main():
     elif option ==7:
         clear_storage(expences)
     elif option ==8:
+        sort_menu(expences)
+    elif option ==9:
         return
     else:
         print("Enter a valid option")
