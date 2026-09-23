@@ -1,6 +1,6 @@
 import json
 
-FILE_PATH = "/storage/emulated/0/expences.json"
+FILE_PATH = "expenses.json"
 
 def load_data():
     try:

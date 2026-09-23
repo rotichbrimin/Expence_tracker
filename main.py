@@ -1,3 +1,5 @@
+import os
+
 from storage import load_data, save_data
 from expenses import add_expence, view_expences, update_expence, delete, clear_storage
 from search import search
@@ -6,6 +8,7 @@ from analytics import total, sort_menu, export_to_csv
 expences = load_data()
     
 def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("\n=== MAIN MENU ===")
     print("1. Add Expence:")
     print("2. View Expences:")
@@ -62,4 +65,5 @@ def main():
     else:
         print("Enter a valid option")
 while True:        
-    main()               
+    main() 
+    input("\nPress Enter to continue")              

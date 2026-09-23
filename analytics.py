@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from expenses import view_expences
 
 def export_to_csv(expences):
     if not expences:
@@ -119,13 +120,16 @@ def total_by_category(expences):
             
             
             
-def display_sorted(expences):
-    if not expences:
-        print("No expence to sort:")
-        return
-    print("=== SORTED LIST ===")
-    for exp in expences:
-        print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+# def display_sorted(expences):
+#     if not expences:
+#         print("No expence to sort:")
+#         return
+#     print("=== SORTED LIST ===")
+#     for exp in expences:
+#         print("-" * 65)
+#         print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<10} | {exp['date']:<12}")
+
+        # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
 
 
 
@@ -145,19 +149,19 @@ def sort_menu(expences):
             
         if option == 1:
             sorted_list = sorted(expences, key = lambda exp : exp['amount'])
-            display_sorted(sorted_list)
+            view_expences(sorted_list)
             
         elif option == 2:
             sorted_list = sorted(expences, key= lambda exp: exp['amount'], reverse = True)
-            display_sorted(sorted_list)
+            view_expences(sorted_list)
             
         elif option ==3:
             sorted_list = sorted(expences, key = lambda exp: exp['name'].lower())
-            display_sorted(sorted_list)
+            view_expences(sorted_list)
             
         elif option == 4:
             sorted_list = sorted(expences, key = lambda exp: exp['date'])
-            display_sorted(sorted_list)
+            view_expences(sorted_list)
             
         elif option == 5:
             return

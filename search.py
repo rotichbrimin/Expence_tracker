@@ -1,4 +1,5 @@
 from datetime import datetime
+from expenses import view_expences
 
 def search(expences):
     while True:
@@ -29,20 +30,26 @@ def search_expence(expences):
         return
     while True:
         search = input("Enter ID or name of expence to search:").lower().strip()
-        found = False
+        results = []
+        # found = False
         for exp in expences:
             if search.isdigit():
                 if int(search)==exp['id']:
-                    
-                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']}| Amount: {exp['amount']} | Date: {exp['date']}")
-                    found =True
+                    results.append(exp)    
+                    # print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']}| Amount: {exp['amount']} | Date: {exp['date']}")
+                    # found =True
             else:
                 if search in exp['name'].lower():
-                    print("\n=== SEARCH RESULTS ===")  
-                    print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
-                    found = True
-        if not found:
-            print("Expence not found")   
+                    results.append(exp)
+                    # print("\n=== SEARCH RESULTS ===")  
+                    # print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                    # found = True
+        if not results:
+            print("Expence not found")  
+
+        else:
+            print("\n=== SEARCH RESULTS ===")
+            view_expences(results)     
         again = input("\nSearch again? (yes/y) or (no/n)? ").strip().lower()
         if again in ["yes", "y"]:
             continue       
@@ -56,13 +63,18 @@ def search_by_date(expences):
         target_date = input("Search expence per date. Use format (YYYY-MM-DD):")
         try:
             datetime.strptime(target_date, "%Y-%m-%d")
-            found = False
+            results = []
+            # found = False
             for exp in expences:
                 if exp['date'] == target_date:
-                    print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
-                    found = True
-            if not found:
+                    results.append(exp)
+                    # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                    # found = True
+            if not results:
                 print(f"Expence not found for date: {target_date}")
+            else:
+                print(f"=== SEARCH RESULTS === {target_date}")
+                view_expences(results)
                 return
         except ValueError:
             print("Enter a valid date! Try again")
@@ -70,19 +82,24 @@ def search_by_date(expences):
 def search_by_category(expences):
     while True:
         search = input("Enter search category: ").lower() 
-        found=False
+        results = []
+        # found=False
     
         for exp in expences:
             if exp['category'].lower()== search:
-                print("=== SEARCH BY CATEGORY ===")
-                print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+                results.append(exp)
+                # print("=== SEARCH BY CATEGORY ===")
+                # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
             
-                found = True
+                # found = True
             
-        if not found:
+        if not results:
             print("No expence in this category")
+
+        else:
+            view_expences(results)    
             
-        again = input("Search again yes/y no/n ?").lower().strip()
+        again = input("\nSearch again yes/y no/n ?").lower().strip()
         
         if again in ["yes", "y"]:
             continue
@@ -91,6 +108,3 @@ def search_by_category(expences):
         else:
             print("Type yes/y or no/n!")
             
-
-
-

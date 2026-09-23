@@ -11,30 +11,33 @@ def clear_storage(expences):
 
 
 def add_expence(expences):
-    while True:
-        try:
-            expence_id =int(input("Enter Expence ID: "))
-            exists = False
-            for exp in expences:
-                if exp['id']==expence_id:
-                    exists=True
-                    break
-                
-            if exists:
-                print(f"ID {expence_id} exists. Try again!")
-                continue
-            else:
-                break
-        except ValueError:
-            print("Enter a valid ID")
+    # while True:
+    if not expences:
+        expence_id = 1
+    else:
+        expence_id = max(exp['id'] for exp in expences) + 1
+        # try:
+        #     expence_id =int(input("Enter Expence ID: "))
+        #     exists = False
+        #     for exp in expences:
+        #         if exp['id']==expence_id:
+        #             exists=True
+        #             break   
+        #     if exists:
+        #         print(f"ID {expence_id} exists. Try again!")
+        #         continue
+        #     else:
+        #         break
+        # except ValueError:
+        #     print("Enter a valid ID")
      
     while True:           
-        name = input("Enter expence name:")
+        name = input("Enter expence name:").strip().title()
         if name:
             break
         print("Name cannot be empty!")
     while True:
-        category = input("Enter category: ")
+        category = input("Enter category: ").strip().title()
         if category:
             break
         print("Category cannot be empty!")
@@ -48,17 +51,19 @@ def add_expence(expences):
         except ValueError:
            print("Enter a valid amount")
            continue
-    while True:       
-        date = input(f"Enter expence date (YYYY-MM-DD) for {name}:").strip()
-        if not date:
-            print("Date cannot be empty!")
-            continue
-        try:
-            datetime.strptime(date, "%Y-%m-%d")
-            break
-        except ValueError:
-            print("Invalid date. Use YYYY-MM-DD")
-            continue
+    date = datetime.today().strftime('%Y-%m-%d')
+    print(f"Date automatically recorded as :{date}") 
+    # while True:       
+    #     date = input(f"Enter expence date (YYYY-MM-DD) for {name}:").strip()
+    #     if not date:
+    #         print("Date cannot be empty!")
+    #         continue
+    #     try:
+    #         datetime.strptime(date, "%Y-%m-%d")
+    #         break
+    #     except ValueError:
+    #         print("Invalid date. Use YYYY-MM-DD")
+    #         continue
     
     return{
         "id":expence_id,
@@ -75,8 +80,11 @@ def view_expences(expences):
         print("No expence made")
         return
     print("\n=== YOUR EXPENSES ===")
+    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT':<10} | {'DATE':<12}")
+    print("-" * 65)
     for exp in expences:
-        print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+        # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
+        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<10} | {exp['date']:<12}")
 
 
 
@@ -189,11 +197,11 @@ def delete_expence(expences):
         for i, exp in enumerate(expences):
             if query.isdigit():
                 if int(query)==exp['id']:
-                    confirm = input("Are you sure to delete? (yes/y), (no/n)").strip().lower()
+                    confirm = input(f"Are you sure to delete ID: {exp['id']} - NAME: {exp['name']}? (yes/y), (no/n)! ").strip().lower()
                     if confirm in ["yes", "y"]:
                         del expences[i]
                         save_data(expences)
-                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully")
+                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully! ")
                         return
                     elif confirm in ["no", "n"]:
                         print("Cancelled")
@@ -201,11 +209,11 @@ def delete_expence(expences):
                          
             else:
                 if query.lower() in exp['name'].lower():
-                    confirm = input("Are you sure to delete? (yes/y), (no/n)").strip().lower()
+                    confirm = input(f"Are you sure to delete ID: {exp['id']} - {exp['name']} ? (yes/y), (no/n)! ").strip().lower()
                     if confirm in ["yes", "y"]:
                         del expences[i]
                         save_data(expences)
-                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully")
+                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully! ")
                         return
                     elif confirm in ["no", "n"]:
                         print("Cancelled")
