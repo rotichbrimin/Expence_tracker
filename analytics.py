@@ -2,28 +2,28 @@ import csv
 from datetime import datetime
 from expenses import view_expences
 
-def export_to_csv(expences):
-    if not expences:
-        print("No data to export")
-        return
+# def export_to_csv(expences):
+#     if not expences:
+#         print("No data to export")
+#         return
 
-    with open("expenses.csv", "w", newline="") as file:
-        writer = csv.writer(file)
+#     with open("expenses.csv", "w", newline="") as file:
+#         writer = csv.writer(file)
 
-        # Header row
-        writer.writerow(["ID", "Name", "Category", "Amount", "Date"])
+#         # Header row
+#         writer.writerow(["ID", "Name", "Category", "Amount", "Date"])
 
-        # Data rows
-        for exp in expences:
-            writer.writerow([
-                exp['id'],
-                exp['name'],
-                exp['category'],
-                exp['amount'],
-                exp['date']
-            ])
+#         # Data rows
+#         for exp in expences:
+#             writer.writerow([
+#                 exp['id'],
+#                 exp['name'],
+#                 exp['category'],
+#                 exp['amount'],
+#                 exp['date']
+#             ])
 
-    print("Data exported successfully to expenses.csv")
+#     print("Data exported successfully to expenses.csv")
     
    
 
@@ -87,7 +87,7 @@ def total_per_date(expences):
                 print("No expence found for this date.")
                 return
         except ValueError:
-            print("Enter a valid date. Use format (YYYY-MM-DD)")
+            print("Enter a valid date. Use format (YYYY-MM-DD)! ")
 
 
 
@@ -97,7 +97,7 @@ def total_by_category(expences):
         print("No expence made:")
         return
     while True:
-        category=input("Enter category:").lower().strip()
+        category=input("Enter category: ").lower().strip()
         total = 0
         found = False
         
@@ -107,10 +107,10 @@ def total_by_category(expences):
                 found =True
                 
         if found:
-            print(f"Total expence for {category} is KSH {total}")
+            print(f"Total expence for {category} is KSH {total}.")
         else:
             print("No expence in this category")
-        again =input("Search again ? yes/y or no/n").lower().strip()
+        again =input("Search again ? yes/y or no/n: ").lower().strip()
         if again in ["yes", "y"]:
             continue
         elif again in ["no", "n"]:
@@ -125,8 +125,8 @@ def total_by_category(expences):
 #         print("No expence to sort:")
 #         return
 #     print("=== SORTED LIST ===")
+#     print("-" * 65)
 #     for exp in expences:
-#         print("-" * 65)
 #         print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<10} | {exp['date']:<12}")
 
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
@@ -167,7 +167,7 @@ def sort_menu(expences):
             return
             
         else:
-           print("Enter an option 1,2,3,4,5")
+           print("Enter an option 1,2,3,4,5! ")
            
         again = input("\nSort again? yes/y or no/n: ")
         if again in ["yes", "y"]:

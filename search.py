@@ -35,12 +35,14 @@ def search_expence(expences):
         for exp in expences:
             if search.isdigit():
                 if int(search)==exp['id']:
-                    results.append(exp)    
+                    results.append(exp)
+
                     # print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']}| Amount: {exp['amount']} | Date: {exp['date']}")
                     # found =True
             else:
                 if search in exp['name'].lower():
                     results.append(exp)
+                    
                     # print("\n=== SEARCH RESULTS ===")  
                     # print(f"\nExpence: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
                     # found = True

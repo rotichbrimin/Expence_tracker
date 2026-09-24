@@ -3,7 +3,7 @@ import os
 from storage import load_data, save_data
 from expenses import add_expence, view_expences, update_expence, delete, clear_storage
 from search import search
-from analytics import total, sort_menu, export_to_csv
+from analytics import total, sort_menu
             
 expences = load_data()
     
@@ -18,8 +18,8 @@ def main():
     print("6. Total  :")
     print("7. Clear  :")
     print("8. Sort   :")
-    print("9. Export to CSV: ")
-    print("10. Exit   :")
+    # print("9. Export to CSV: ")
+    print("9. Exit   :")
     
     try:
         option=int(input("\nEnter an option (1-10): "))
@@ -58,12 +58,12 @@ def main():
         clear_storage(expences)
     elif option ==8:
         sort_menu(expences)
-    elif option == 9:
-        export_to_csv(expences)
-    elif option ==10:
+    # elif option == 9:
+    #     export_to_csv(expences)
+    elif option ==9:
         return
     else:
         print("Enter a valid option")
 while True:        
     main() 
-    input("\nPress Enter to continue")              
+    input("\nPress Enter to continue: ")              

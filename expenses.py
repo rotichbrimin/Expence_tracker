@@ -51,8 +51,12 @@ def add_expence(expences):
         except ValueError:
            print("Enter a valid amount")
            continue
+
+
     date = datetime.today().strftime('%Y-%m-%d')
     print(f"Date automatically recorded as :{date}") 
+
+
     # while True:       
     #     date = input(f"Enter expence date (YYYY-MM-DD) for {name}:").strip()
     #     if not date:
@@ -80,11 +84,11 @@ def view_expences(expences):
         print("No expence made")
         return
     print("\n=== YOUR EXPENSES ===")
-    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT':<10} | {'DATE':<12}")
+    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12}")
     print("-" * 65)
     for exp in expences:
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
-        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<10} | {exp['date']:<12}")
+        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12}")
 
 
 
@@ -242,4 +246,3 @@ def delete_all_expences(expences):
         print("Deletion cancelled. Your data is safe.")
         
       
-
