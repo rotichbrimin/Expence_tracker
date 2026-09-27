@@ -3,7 +3,7 @@ import os
 from storage import load_data, save_data
 from expenses import add_expence, view_expences, update_expence, delete, clear_storage
 from search import search
-from analytics import total, sort_menu
+from analytics import total, sort_menu, view_summary
             
 expences = load_data()
     
@@ -16,10 +16,11 @@ def main():
     print("4. Delete :")
     print("5. Search :")
     print("6. Total  :")
-    print("7. Clear  :")
-    print("8. Sort   :")
+    print("7. View Summary: ")
+    print("8. Clear  :")
+    print("9. Sort   :")
     # print("9. Export to CSV: ")
-    print("9. Exit   :")
+    print("10. Exit   :")
     
     try:
         option=int(input("\nEnter an option (1-10): "))
@@ -54,13 +55,15 @@ def main():
     elif option ==6:
         view_expences(expences)
         total(expences)
-    elif option ==7:
-        clear_storage(expences)
+    elif option == 7:
+        view_summary(expences)
     elif option ==8:
+        clear_storage(expences)
+    elif option ==9:
         sort_menu(expences)
     # elif option == 9:
     #     export_to_csv(expences)
-    elif option ==9:
+    elif option ==10:
         return
     else:
         print("Enter a valid option")
