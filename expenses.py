@@ -2,29 +2,29 @@
 from storage import save_data
 from datetime import datetime
 
-def clear_storage(expences):
-    expences.clear()
-    save_data(expences)
+def clear_storage(expenses):
+    expenses.clear()
+    save_data(expenses)
     print("All saved data cleared")
 
 
 
 
-def add_expence(expences):
+def add_expense(expenses):
     # while True:
-    if not expences:
-        expence_id = 1
+    if not expenses:
+        expense_id = 1
     else:
-        expence_id = max(exp['id'] for exp in expences) + 1
+        expense_id = max(exp['id'] for exp in expenses) + 1
         # try:
-        #     expence_id =int(input("Enter Expence ID: "))
+        #     expense_id =int(input("Enter Expense ID: "))
         #     exists = False
-        #     for exp in expences:
-        #         if exp['id']==expence_id:
+        #     for exp in expenses:
+        #         if exp['id']==expense_id:
         #             exists=True
         #             break   
         #     if exists:
-        #         print(f"ID {expence_id} exists. Try again!")
+        #         print(f"ID {expense_id} exists. Try again!")
         #         continue
         #     else:
         #         break
@@ -32,7 +32,7 @@ def add_expence(expences):
         #     print("Enter a valid ID")
      
     while True:           
-        name = input("Enter expence name:").strip().title()
+        name = input("Enter expense name:").strip().title()
         if name:
             break
         print("Name cannot be empty!")
@@ -73,7 +73,7 @@ def add_expence(expences):
     #         continue
     
     return{
-        "id":expence_id,
+        "id":expense_id,
         "name":name,
         "category":category,
         "amount":amount,
@@ -83,15 +83,15 @@ def add_expence(expences):
     
     
     
-def view_expences(expences):
-    if not expences:
-        print("No expence made")
+def view_expenses(expenses):
+    if not expenses:
+        print("No expense made")
         return
     print("\n=== YOUR EXPENSES ===")
     print("-" * 84)
     print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12} | {'TIME':<10}")
     print("-" * 84)
-    for exp in expences:
+    for exp in expenses:
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
         #.get ('time', 'N/A') prevent crashing on older entries that only had dates
         time_val = exp.get('time', 'N/A')
@@ -100,16 +100,16 @@ def view_expences(expences):
 
 
 
-def update_expence(expences):
-    if not expences:
-        print("No expence to update")
+def update_expense(expenses):
+    if not expenses:
+        print("No expense to update")
         return
 
     while True:
-        search_update = input("\nEnter ID or name of expence to update: ").strip().lower()
+        search_update = input("\nEnter ID or name of expense to update: ").strip().lower()
         found = False
 
-        for exp in expences:
+        for exp in expenses:
             
             
             if search_update.isdigit() and int(search_update) == exp['id']:
@@ -139,10 +139,10 @@ def update_expence(expences):
                         print("Invalid option!")
 
                 if choice == 1:
-                    new_name = input("Enter new name: ").strip()
+                    new_name = input("Enter new name: ").strip().title()
                     exp['name'] = new_name
                     print(f"\nName updated to {new_name}")
-                    save_data(expences)
+                    save_data(expenses)
                     return
 
                 elif choice == 2:
@@ -152,7 +152,7 @@ def update_expence(expences):
                             if new_amount > 0:
                                 exp['amount'] = new_amount
                                 print(f"\nAmount updated to {new_amount}")
-                                save_data(expences)
+                                save_data(expenses)
                                 return
                             else:
                                 print("Amount must be more than 0")
@@ -166,7 +166,7 @@ def update_expence(expences):
                             datetime.strptime(new_date, "%Y-%m-%d")
                             exp['date'] = new_date
                             print(f"\nDate updated to {new_date}")
-                            save_data(expences)
+                            save_data(expenses)
                             return
                            
                         except ValueError:
@@ -180,43 +180,45 @@ def update_expence(expences):
 
 
 
-def delete(expences):
+def delete(expenses):
     while True:
+        print("")
+        print("\n=== DELETE EXPENSE ===")
         print("1. Delete per ID or Name")
         print("2. Delete all.")
         print("3. Back")
         try:
-            option = int(input("Enter an option (1,2,3): "))
+            option = int(input("\nEnter an option (1,2,3): "))
         
             if option == 1:
-                delete_expence(expences)
+                delete_expense(expenses)
             elif option ==2:
-                delete_all_expences(expences)
+                delete_all_expenses(expenses)
             elif option ==3:
                 return
             else:
-                print("Choose either 1,2 or 3:")
+                print("\nChoose either 1,2 or 3:")
          
         except ValueError:
             print("Invalid option! Try again")
 
 
          
-def delete_expence(expences):
-    if not expences:
-        print("No expence to delete!")
+def delete_expense(expenses):
+    if not expenses:
+        print("No expense to delete!")
         return
         
     while True:
-        query= input("\nEnter expence ID or Name to delete: ").strip()
-        for i, exp in enumerate(expences):
+        query= input("\nEnter expense ID or Name to delete: ").strip()
+        for i, exp in enumerate(expenses):
             if query.isdigit():
                 if int(query)==exp['id']:
                     confirm = input(f"Are you sure to delete ID: {exp['id']} - NAME: {exp['name']}? (yes/y), (no/n)! ").strip().lower()
                     if confirm in ["yes", "y"]:
-                        del expences[i]
-                        save_data(expences)
-                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully! ")
+                        del expenses[i]
+                        save_data(expenses)
+                        print(f"Expense: {exp['id']} - {exp['name']} deleted successfully! ")
                         return
                     elif confirm in ["no", "n"]:
                         print("Cancelled")
@@ -226,16 +228,16 @@ def delete_expence(expences):
                 if query.lower() in exp['name'].lower():
                     confirm = input(f"Are you sure to delete ID: {exp['id']} - {exp['name']} ? (yes/y), (no/n)! ").strip().lower()
                     if confirm in ["yes", "y"]:
-                        del expences[i]
-                        save_data(expences)
-                        print(f"Expence: {exp['id']} - {exp['name']} deleted successfully! ")
+                        del expenses[i]
+                        save_data(expenses)
+                        print(f"Expense: {exp['id']} - {exp['name']} deleted successfully! ")
                         return
                     elif confirm in ["no", "n"]:
                         print("Cancelled")
                         return
                         
         else:
-            print("Expence not found")
+            print("Expense not found")
             retry = input("Try again? (yes/y) or (no/n)").strip().lower()
             if retry in ["yes", "y"]:
                 continue
@@ -247,11 +249,11 @@ def delete_expence(expences):
 
 
 
-def delete_all_expences(expences):
+def delete_all_expenses(expenses):
     confirm = input("!!! WARNING: Are you sure you want to delete ALL expenses? (yes/no): ").strip().lower()
     if confirm in ["yes", "y"]:
-        expences.clear() 
-        save_data(expences)
+        expenses.clear() 
+        save_data(expenses)
         print("All data has been wiped successfully.")
     else:
         print("Deletion cancelled. Your data is safe.")
