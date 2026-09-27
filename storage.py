@@ -17,15 +17,17 @@ def load_data():
                     continue
                 #Rebuild the dictionary from CSV row
                 if row:
-                    expenses.append(
-                        {
+                    exp = {
                             "id" : int(row[0]),
                             "name": row[1],
                             "category": row[2],
                             "amount": int(row[3]),
                             "date": row[4]
-                        }
-                    )
+                    }
+                #Safely handle the time column if it exists.
+                exp["time"] = row[5] if len(row) > 5 else "N/A"
+                #Appended the finished dictionary
+                expenses.append(exp)
         return expenses
     except FileNotFoundError:
         #If program is run for the very first time without any CSV retutn an empty list
@@ -37,7 +39,7 @@ def save_data(expences):
         writer = csv.writer(file)
 
         #write column header
-        writer.writerow(["ID", "NAME", "CATEGORY", "AMOUNT", "DATE"])
+        writer.writerow(["ID", "NAME", "CATEGORY", "AMOUNT", "DATE", "TIME"])
 
         #loop through the list and write the actual data wrows
         for exp in expences:
@@ -46,5 +48,6 @@ def save_data(expences):
                 exp['name'],
                 exp['category'],
                 exp['amount'],
-                exp['date']
+                exp['date'],
+                exp.get('time', 'N/A')
             ])
