@@ -88,6 +88,7 @@ def view_expences(expences):
         print("No expence made")
         return
     print("\n=== YOUR EXPENSES ===")
+    print("-" * 84)
     print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12} | {'TIME':<10}")
     print("-" * 84)
     for exp in expences:
@@ -105,7 +106,7 @@ def update_expence(expences):
         return
 
     while True:
-        search_update = input("Enter ID or name of expence to update: ").strip().lower()
+        search_update = input("\nEnter ID or name of expence to update: ").strip().lower()
         found = False
 
         for exp in expences:
@@ -140,6 +141,7 @@ def update_expence(expences):
                 if choice == 1:
                     new_name = input("Enter new name: ").strip()
                     exp['name'] = new_name
+                    print(f"\nName updated to {new_name}")
                     save_data(expences)
                     return
 
@@ -149,6 +151,7 @@ def update_expence(expences):
                             new_amount = int(input("Enter new amount: "))
                             if new_amount > 0:
                                 exp['amount'] = new_amount
+                                print(f"\nAmount updated to {new_amount}")
                                 save_data(expences)
                                 return
                             else:
@@ -162,6 +165,7 @@ def update_expence(expences):
                         try:
                             datetime.strptime(new_date, "%Y-%m-%d")
                             exp['date'] = new_date
+                            print(f"\nDate updated to {new_date}")
                             save_data(expences)
                             return
                            
