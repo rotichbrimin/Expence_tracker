@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime
-from expenses import view_expences
+from expenses import view_expenses
 
 # def export_to_csv(expences):
 #     if not expences:
@@ -27,7 +27,7 @@ from expenses import view_expences
     
    
 
-def total(expences):
+def total(expenses):
     while True:
         print("\n ===TOTAL EXPENSES ===:")
         print("1. Total Overall: ")
@@ -38,11 +38,11 @@ def total(expences):
         try:
             option = int(input("Enter an option: "))
             if option == 1:
-                total_spending(expences)
+                total_spending(expenses)
             elif option ==2:
-                total_per_date(expences)
+                total_per_date(expenses)
             elif option ==3:
-                total_by_category(expences)
+                total_by_category(expenses)
             elif option ==4:
                 return
             else:
@@ -54,13 +54,13 @@ def total(expences):
 
               
 
-def total_spending(expences):
-    if not expences:
+def total_spending(expenses):
+    if not expenses:
         print("No expence available")
         return
     total=0
     
-    for exp in expences:
+    for exp in expenses:
         total+= exp['amount']    
     
     print("\n=== TOTAL SPENDINGS ===")  
@@ -69,14 +69,14 @@ def total_spending(expences):
 
 
 
-def total_per_date(expences):
+def total_per_date(expenses):
     while True:
         target_date = input("\nEnter date to find spendings. Use format (YYYY-MM-DD): !") 
         try:
             datetime.strptime(target_date, "%Y-%m-%d")
             total = 0
             found = False
-            for exp in expences:
+            for exp in expenses:
                 if exp['date']  == target_date:
                     total+=exp['amount']
                     found =True
@@ -84,7 +84,7 @@ def total_per_date(expences):
                 print(f"\nTotal spending for {target_date}: KSH {total}.")
                 return
             else:
-                print("No expence found for this date.")
+                print("No expense found for this date.")
                 return
         except ValueError:
             print("Enter a valid date. Use format (YYYY-MM-DD)! ")
@@ -92,24 +92,24 @@ def total_per_date(expences):
 
 
 
-def total_by_category(expences):
-    if not expences:
-        print("No expence made:")
+def total_by_category(expenses):
+    if not expenses:
+        print("No expense made:")
         return
     while True:
         category=input("Enter category: ").lower().strip()
         total = 0
         found = False
         
-        for exp in expences:
+        for exp in expenses:
             if exp['category'].lower()== category:
                 total+= exp['amount']
                 found =True
                 
         if found:
-            print(f"Total expence for {category} is KSH {total}.")
+            print(f"Total expense for {category} is KSH {total}.")
         else:
-            print("No expence in this category")
+            print("No expense in this category")
         again =input("Search again ? yes/y or no/n: ").lower().strip()
         if again in ["yes", "y"]:
             continue
@@ -131,15 +131,15 @@ def total_by_category(expences):
 
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
 
-def view_summary(expences):
-    if not expences:
+def view_summary(expenses):
+    if not expenses:
         print("No expense recorded! ")
         return
 
-    totatl_amount = sum(exp['amount'] for exp in expences)
+    totatl_amount = sum(exp['amount'] for exp in expenses)
     category_total = {}
 
-    for exp in expences:
+    for exp in expenses:
         cat = exp['category']
         category_total[cat] = category_total.get(cat,0) + exp['amount']
 
@@ -153,7 +153,7 @@ def view_summary(expences):
 
 
 
-def sort_menu(expences):
+def sort_menu(expenses):
     while True:
         print("\n=== SORT MENU ===")
         print("1. Sort by Amount (low to high: )")
@@ -169,24 +169,24 @@ def sort_menu(expences):
             print("Enter a valid option!")
             
         if option == 1:
-            sorted_list = sorted(expences, key = lambda exp : exp['amount'])
-            view_expences(sorted_list)
+            sorted_list = sorted(expenses, key = lambda exp : exp['amount'])
+            view_expenses(sorted_list)
             
         elif option == 2:
-            sorted_list = sorted(expences, key= lambda exp: exp['amount'], reverse = True)
-            view_expences(sorted_list)
+            sorted_list = sorted(expenses, key= lambda exp: exp['amount'], reverse = True)
+            view_expenses(sorted_list)
             
         elif option ==3:
-            sorted_list = sorted(expences, key = lambda exp: exp['name'].lower())
-            view_expences(sorted_list)
+            sorted_list = sorted(expenses, key = lambda exp: exp['name'].lower())
+            view_expenses(sorted_list)
             
         elif option == 4:
-            sorted_list = sorted(expences, key = lambda exp: exp['date'])
-            view_expences(sorted_list)
+            sorted_list = sorted(expenses, key = lambda exp: exp['date'])
+            view_expenses(sorted_list)
 
         elif option == 5:
-            sorted_list = sorted(expences, key = lambda exp: exp['date'], reverse = True)
-            view_expences(sorted_list)
+            sorted_list = sorted(expenses, key = lambda exp: exp['date'], reverse = True)
+            view_expenses(sorted_list)
             
         elif option == 6:
             return
