@@ -33,7 +33,7 @@ def load_data():
         #If program is run for the very first time without any CSV retutn an empty list
         return []
 
-def save_data(expences):
+def save_data(expenses):
     #open in "w" (write) mode. newline = "" prevents windows from addind blank rows between data
     with open(FILE_PATH, "w", newline="") as file:
         writer = csv.writer(file)
@@ -42,7 +42,7 @@ def save_data(expences):
         writer.writerow(["ID", "NAME", "CATEGORY", "AMOUNT", "DATE", "TIME"])
 
         #loop through the list and write the actual data wrows
-        for exp in expences:
+        for exp in expenses:
             writer.writerow([
                 exp['id'],
                 exp['name'],
