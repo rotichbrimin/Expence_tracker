@@ -52,9 +52,12 @@ def add_expence(expences):
            print("Enter a valid amount")
            continue
 
-
+     #Automatic date and time
     date = datetime.today().strftime('%Y-%m-%d')
+    now = datetime.today()
+    time_str = now.strftime('%I:%M %p')
     print(f"Date automatically recorded as :{date}") 
+    print(f"Time recorded automatically as {time_str}")
 
 
     # while True:       
@@ -74,7 +77,8 @@ def add_expence(expences):
         "name":name,
         "category":category,
         "amount":amount,
-        "date":date
+        "date":date,
+        "time": time_str
     }
     
     
@@ -84,11 +88,14 @@ def view_expences(expences):
         print("No expence made")
         return
     print("\n=== YOUR EXPENSES ===")
-    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12}")
-    print("-" * 65)
+    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12} | {'TIME':<10}")
+    print("-" * 84)
     for exp in expences:
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
-        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12}")
+        #.get ('time', 'N/A') prevent crashing on older entries that only had dates
+        time_val = exp.get('time', 'N/A')
+        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12} | {time_val:<10}")
+        # print("-" * 78)
 
 
 
