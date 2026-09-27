@@ -1,18 +1,18 @@
 import os
 
 from storage import load_data, save_data
-from expenses import add_expence, view_expences, update_expence, delete, clear_storage
+from expenses import add_expense, view_expenses, update_expense, delete, clear_storage
 from search import search
 from analytics import total, sort_menu, view_summary
             
-expences = load_data()
+expenses = load_data()
     
 def main():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("\n=== MAIN MENU ===")
-    print("1. Add Expence:")
-    print("2. View Expences:")
-    print("3. Update Expence:")
+    print("1. Add Expense:")
+    print("2. View Expenses:")
+    print("3. Update Expense:")
     print("4. Delete :")
     print("5. Search :")
     print("6. Total  :")
@@ -30,40 +30,40 @@ def main():
         
     if option==1:
         while True:
-            expences.append(add_expence(expences))
-            save_data(expences)
-            again=input("Add another expence? yes/y no/n :").strip().lower()
+            expenses.append(add_expense(expenses))
+            save_data(expenses)
+            again=input("Add another expense? yes/y no/n :").strip().lower()
             if again in ["yes", "y"]:  
                 continue
             elif again in ["no", "n"]:
-                view_expences(expences)
+                view_expenses(expenses)
                 return
             else:
                 print("Enter yes/y no/n")
                  
     elif option ==2:
-        view_expences(expences)
+        view_expenses(expenses)
     elif option ==3:
-        view_expences(expences)
-        update_expence(expences)
-        save_data(expences)
+        view_expenses(expenses)
+        update_expense(expenses)
+        save_data(expenses)
     elif option ==4:
-        view_expences(expences)
-        delete(expences)
-        save_data(expences)
+        view_expenses(expenses)
+        delete(expenses)
+        save_data(expenses)
     elif option ==5:
-        search(expences)
+        search(expenses)
     elif option ==6:
-        view_expences(expences)
-        total(expences)
+        view_expenses(expenses)
+        total(expenses)
     elif option == 7:
-        view_summary(expences)
+        view_summary(expenses)
     elif option ==8:
-        clear_storage(expences)
+        clear_storage(expenses)
     elif option ==9:
-        sort_menu(expences)
+        sort_menu(expenses)
     # elif option == 9:
-    #     export_to_csv(expences)
+    #     export_to_csv(expenses)
     elif option ==10:
         return
     else:
