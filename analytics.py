@@ -131,6 +131,26 @@ def total_by_category(expences):
 
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
 
+def view_summary(expences):
+    if not expences:
+        print("No expense recorded! ")
+        return
+
+    totatl_amount = sum(exp['amount'] for exp in expences)
+    category_total = {}
+
+    for exp in expences:
+        cat = exp['category']
+        category_total[cat] = category_total.get(cat,0) + exp['amount']
+
+    print("\n === EXPENSE SUMMARY ===")
+    print(f"Total Spent: KSH: {totatl_amount}: ")
+    print("\n=== BREAKDOWN BY CATEGORY ===")
+    print("-" * 40)
+    for category, amount in category_total.items():
+        percentage = (amount/ totatl_amount) * 100
+        print(f"{category:<15} : KSH {amount:<8} : ({percentage:.1f}%)")
+
 
 
 def sort_menu(expences):
@@ -140,7 +160,8 @@ def sort_menu(expences):
         print("2. Sort by Amount (high to low: )")
         print("3. Sort by Name (A to Z): ")
         print("4. Sort by Date (old to new): ")
-        print("5. Back: ")
+        print("5. Sort by Date (new to old): ")
+        print("6. Back: ")
         
         try:
             option = int(input("Enter an option: "))
@@ -162,12 +183,16 @@ def sort_menu(expences):
         elif option == 4:
             sorted_list = sorted(expences, key = lambda exp: exp['date'])
             view_expences(sorted_list)
-            
+
         elif option == 5:
+            sorted_list = sorted(expences, key = lambda exp: exp['date'], reverse = True)
+            view_expences(sorted_list)
+            
+        elif option == 6:
             return
             
         else:
-           print("Enter an option 1,2,3,4,5! ")
+           print("Enter an option 1,2,3,4,5,6! ")
            
         again = input("\nSort again? yes/y or no/n: ")
         if again in ["yes", "y"]:
