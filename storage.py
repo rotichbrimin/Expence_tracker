@@ -24,10 +24,10 @@ def load_data():
                             "amount": int(row[3]),
                             "date": row[4]
                     }
-                #Safely handle the time column if it exists.
-                exp["time"] = row[5] if len(row) > 5 else "N/A"
-                #Appended the finished dictionary
-                expenses.append(exp)
+                    #Safely handle the time column if it exists.
+                    exp["time"] = row[5] if len(row) > 5 else "N/A"
+                    #Appended the finished dictionary
+                    expenses.append(exp)
         return expenses
     except FileNotFoundError:
         #If program is run for the very first time without any CSV retutn an empty list
