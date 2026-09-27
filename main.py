@@ -44,6 +44,7 @@ def main():
     elif option ==2:
         view_expences(expences)
     elif option ==3:
+        view_expences(expences)
         update_expence(expences)
         save_data(expences)
     elif option ==4:
