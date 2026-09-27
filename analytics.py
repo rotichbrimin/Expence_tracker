@@ -136,7 +136,7 @@ def view_summary(expenses):
         print("No expense recorded! ")
         return
 
-    totatl_amount = sum(exp['amount'] for exp in expenses)
+    total_amount = sum(exp['amount'] for exp in expenses)
     category_total = {}
 
     for exp in expenses:
@@ -144,11 +144,11 @@ def view_summary(expenses):
         category_total[cat] = category_total.get(cat,0) + exp['amount']
 
     print("\n === EXPENSE SUMMARY ===")
-    print(f"Total Spent: KSH: {totatl_amount}: ")
+    print(f"Total Spent: KSH: {total_amount}: ")
     print("\n=== BREAKDOWN BY CATEGORY ===")
     print("-" * 40)
     for category, amount in category_total.items():
-        percentage = (amount/ totatl_amount) * 100
+        percentage = (amount/ total_amount) * 100
         print(f"{category:<15} : KSH {amount:<8} : ({percentage:.1f}%)")
 
 
