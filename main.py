@@ -1,4 +1,5 @@
 import os
+import sys
 
 from storage import load_data, save_data
 from expenses import add_expense, view_expenses, update_expense, delete, clear_storage
@@ -65,7 +66,8 @@ def main():
     # elif option == 9:
     #     export_to_csv(expenses)
     elif option ==10:
-        return
+        print("Exiting Expense Tracker! ")
+        sys.exit()
     else:
         print("Enter a valid option")
 while True:        
