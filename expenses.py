@@ -88,14 +88,14 @@ def view_expenses(expenses):
         print("No expense made")
         return
     print("\n=== YOUR EXPENSES ===")
-    print("-" * 84)
-    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12} | {'TIME':<10}")
-    print("-" * 84)
+    print("-" * 89)
+    print(f"{'ID':<5} | {'NAME':<15} | {'CATEGORY':<15} | {'AMOUNT(KSH)':<15} | {'DATE':<12} | {'TIME':<10}  | ")
+    print("-" * 89)
     for exp in expenses:
         # print(f"ID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount: {exp['amount']} | Date: {exp['date']}")
         #.get ('time', 'N/A') prevent crashing on older entries that only had dates
         time_val = exp.get('time', 'N/A')
-        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12} | {time_val:<10}")
+        print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12} | {time_val:<10}  | ")
         # print("-" * 78)
 
 
