@@ -56,7 +56,7 @@ def add_expense(expenses):
     date = datetime.today().strftime('%Y-%m-%d')
     now = datetime.today()
     time_str = now.strftime('%I:%M %p')
-    print(f"Date automatically recorded as :{date}") 
+    print(f"\nDate automatically recorded as :{date}") 
     print(f"Time recorded automatically as {time_str}")
 
 
@@ -120,11 +120,12 @@ def update_expense(expenses):
                 found = True
 
             if found:
-                print(f"\nID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} Amount:{exp['amount']} | Date: {exp['date']}")
+                print(f"\nID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount:{exp['amount']} | Date: {exp['date']}")
 
                 print("\n1. Update Name")
                 print("2. Update Amount")
                 print("3. Update Date")
+                print("4. Update Category")
                 
                 while True:
 
@@ -133,7 +134,7 @@ def update_expense(expenses):
                     except ValueError:
                         print("Enter a valid option")
                         continue
-                    if choice in [1,2,3]:
+                    if choice in [1,2,3,4]:
                         break
                     else:
                         print("Invalid option!")
@@ -171,6 +172,13 @@ def update_expense(expenses):
                            
                         except ValueError:
                             print("Invalid date. Use YYYY-MM-DD")
+                elif choice == 4:
+                    new_category = input("Enter New Category: ").strip().title()
+                    exp['category'] = new_category
+                    print(f"New category updated to {new_category}")
+                    save_data(expenses)
+                    return
+
 
                 else:
                     print("Invalid option")
