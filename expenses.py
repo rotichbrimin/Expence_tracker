@@ -97,7 +97,7 @@ def view_expenses(expenses):
         time_val = exp.get('time', 'N/A')
         print(f"{exp['id']:<5} | {exp['name']:<15} | {exp['category']:<15} | {exp['amount']:<15} | {exp['date']:<12} | {time_val:<10}  | ")
         # print("-" * 78)
-
+    print("-" * 89)
 
 
 def update_expense(expenses):
@@ -188,6 +188,41 @@ def update_expense(expenses):
 
 
 
+def monthly_budget(expenses):
+    if not expenses:
+        print("No expense made! ")
+        return
+    current_month = datetime.today().strftime('%Y-%m')
+    expense_list= [
+        exp for exp in expenses
+        if exp.get("date", "").startswith(current_month)
+    ]
+    if not expense_list:
+        print(f"No expense made for this month {current_month}")
+        return
+    monthly_total = sum(exp['amount'] for exp in expense_list)
+    print(f"\nMonthly Budget Report for this month KSH: {current_month}: ")
+    print(f"Total Spent This Month KSH: {monthly_total}")
+
+    try:
+        limit = float(input("Enter your Monthly limit: "))
+    except ValueError:
+        print("Enter a valid digit! ")
+        return
+    print("-" * 40)
+    if monthly_total > limit:
+        excess = monthly_total - limit
+        print(f"BUDGET EXCEEDED! You are over budget by KSH: {excess:.2f}!")
+    elif monthly_total >= (limit * 0.8):
+        print("WARNING! You have used 80% or more of your monthly budget!")
+    else:
+        remaining = limit - monthly_total
+        print(f"You are within budget! Remaining KSH:{remaining:.2f}")
+    print("-" * 40)
+    
+
+ 
+       
 def delete(expenses):
     while True:
         print("")
