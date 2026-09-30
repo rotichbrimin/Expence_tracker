@@ -1,6 +1,6 @@
 import csv
 from datetime import datetime
-from expenses import view_expenses
+from expenses import view_expenses, monthly_budget
 
 # def export_to_csv(expences):
 #     if not expences:
@@ -30,23 +30,29 @@ from expenses import view_expenses
 def total(expenses):
     while True:
         print("\n ===TOTAL EXPENSES ===:")
-        print("1. Total Overall: ")
-        print("2. Total per date: ")
-        print("3. Total per category:")
-        print("4. Back")
+        print("1. Check Monthly Budget:")
+        print("2. Total Overall: ")
+        print("3. Total per date: ")
+        print("4. Total per category:")
+        print("5. Filter By Date Range:")
+        print("6. Back")
         
         try:
             option = int(input("Enter an option: "))
             if option == 1:
+                monthly_budget(expenses)
+            elif option == 2:
                 total_spending(expenses)
-            elif option ==2:
-                total_per_date(expenses)
             elif option ==3:
-                total_by_category(expenses)
+                total_per_date(expenses)
             elif option ==4:
+                total_by_category(expenses)
+            elif option == 5:
+                filter_by_date_range(expenses)
+            elif option ==6:
                 return
             else:
-                print("Enter an option 1,2 or 3: ")
+                print("Enter an option 1,2,3,4 or 5: ")
                 
         except ValueError:
             print("Enter a valid option! Try again:")
@@ -152,6 +158,36 @@ def view_summary(expenses):
         print(f"{category:<15} : KSH {amount:<8} : ({percentage:.1f}%)")
 
 
+def filter_by_date_range(expenses):
+    if not expenses:
+        print("No expense made! ")
+        return
+    start_date = input("Enter start date (YYYY-MM-DD): ").strip()
+    end_date = input("Enter end date (YYYY-MM-DD): ").strip()
+
+    try:
+        datetime.strptime(start_date, "%Y-%m-%d")
+        datetime.strptime(end_date, "%Y-%m-%d")
+    except ValueError:
+        print("Invalid date format! Please use (YYYY-MM-DD)")
+        return
+    if start_date > end_date:
+        print("Error: Start date cannot be after end date! ")
+        return
+    filtered = [
+        exp for exp in expenses
+        if start_date <= exp.get("date", "") <= end_date
+    ]
+
+    if not filtered:
+        print(f"No expense found between {start_date} and {end_date}! ")
+        return
+    total = sum(exp['amount'] for exp in filtered)
+
+    print(f"\n===SPENDINGS FROM {start_date} TO {end_date}")
+    for exp in filtered:
+        view_expenses(filtered)
+    print(f"\nTotal spending from {start_date} to {end_date} is KSH: {total}")
 
 def sort_menu(expenses):
     while True:
