@@ -164,7 +164,8 @@ def filter_by_date_range(expenses):
         return
     start_date = input("Enter start date (YYYY-MM-DD): ").strip()
     end_date = input("Enter end date (YYYY-MM-DD): ").strip()
-
+    
+    #Date error handling
     try:
         datetime.strptime(start_date, "%Y-%m-%d")
         datetime.strptime(end_date, "%Y-%m-%d")
@@ -182,10 +183,12 @@ def filter_by_date_range(expenses):
     if not filtered:
         print(f"No expense found between {start_date} and {end_date}! ")
         return
+    #Sum of expenses from given date range
     total = sum(exp['amount'] for exp in filtered)
 
     print(f"\n===SPENDINGS FROM {start_date} TO {end_date}")
     for exp in filtered:
+        #Pass through filtered list to print expenses only from date range
         view_expenses(filtered)
     print(f"\nTotal spending from {start_date} to {end_date} is KSH: {total}")
 
