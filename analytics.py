@@ -198,9 +198,10 @@ def sort_menu(expenses):
         print("1. Sort by Amount (low to high: )")
         print("2. Sort by Amount (high to low: )")
         print("3. Sort by Name (A to Z): ")
-        print("4. Sort by Date (old to new): ")
-        print("5. Sort by Date (new to old): ")
-        print("6. Back: ")
+        print("4. Sort by Name (z to A): ")
+        print("5. Sort by Date (old to new): ")
+        print("6. Sort by Date (new to old): ")
+        print("7. Back: ")
         
         try:
             option = int(input("Enter an option: "))
@@ -218,20 +219,22 @@ def sort_menu(expenses):
         elif option ==3:
             sorted_list = sorted(expenses, key = lambda exp: exp['name'].lower())
             view_expenses(sorted_list)
-            
         elif option == 4:
+            sorted_list = sorted(expenses, key = lambda exp : exp['name'].lower(), reverse=True)  
+            view_expenses(sorted_list)          
+        elif option == 5:
             sorted_list = sorted(expenses, key = lambda exp: exp['date'])
             view_expenses(sorted_list)
 
-        elif option == 5:
+        elif option == 6:
             sorted_list = sorted(expenses, key = lambda exp: exp['date'], reverse = True)
             view_expenses(sorted_list)
             
-        elif option == 6:
+        elif option == 7:
             return
             
         else:
-           print("Enter an option 1,2,3,4,5,6! ")
+           print("Enter an option 1,2,3,4,5,6,7! ")
            
         again = input("\nSort again? yes/y or no/n: ")
         if again in ["yes", "y"]:
