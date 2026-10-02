@@ -2,7 +2,7 @@ import os
 import sys
 
 from storage import load_data, save_data
-from expenses import add_expense, view_expenses, update_expense, delete, clear_storage
+from expenses import add_expense, view_expenses, update_expense, delete, delete_all_expenses
 from search import search
 from analytics import total, sort_menu, view_summary
             
@@ -33,7 +33,7 @@ def main():
         while True:
             expenses.append(add_expense(expenses))
             save_data(expenses)
-            again=input("Add another expense? yes/y no/n :").strip().lower()
+            again=input("\nAdd another expense? yes/y no/n :").strip().lower()
             if again in ["yes", "y"]:  
                 continue
             elif again in ["no", "n"]:
@@ -60,7 +60,7 @@ def main():
     elif option == 7:
         view_summary(expenses)
     elif option ==8:
-        clear_storage(expenses)
+        delete_all_expenses(expenses)
     elif option ==9:
         sort_menu(expenses)
     # elif option == 9:
