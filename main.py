@@ -33,14 +33,16 @@ def main():
         while True:
             expenses.append(add_expense(expenses))
             save_data(expenses)
-            again=input("\nAdd another expense? yes/y no/n :").strip().lower()
-            if again in ["yes", "y"]:  
-                continue
-            elif again in ["no", "n"]:
-                view_expenses(expenses)
-                return
-            else:
-                print("Enter yes/y no/n")
+            while True:
+
+                again=input("\nAdd another expense? yes/y no/n :").strip().lower()
+                if again in ["yes", "y"]:  
+                    break #move out of this inner loop so that the user can enter the new expense
+                elif again in ["no", "n"]:
+                    view_expenses(expenses)
+                    return #Exist the main function
+                else:
+                    print("Enter yes/y no/n")
                  
     elif option ==2:
         view_expenses(expenses)

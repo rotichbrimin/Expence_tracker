@@ -77,7 +77,8 @@ def total_spending(expenses):
 
 def total_per_date(expenses):
     while True:
-        target_date = input("\nEnter date to find spendings. Use format (YYYY-MM-DD): !") 
+        target_date = input("\nEnter date to find spendings. Use format (YYYY-MM-DD): ")
+        results = [] 
         try:
             datetime.strptime(target_date, "%Y-%m-%d")
             total = 0
@@ -85,8 +86,10 @@ def total_per_date(expenses):
             for exp in expenses:
                 if exp['date']  == target_date:
                     total+=exp['amount']
+                    results.append(exp)
                     found =True
             if found:
+                view_expenses(results)
                 print(f"\nTotal spending for {target_date}: KSH {total}.")
                 return
             else:
@@ -104,25 +107,29 @@ def total_by_category(expenses):
         return
     while True:
         category=input("Enter category: ").lower().strip()
+        results = []
         total = 0
         found = False
         
         for exp in expenses:
             if exp['category'].lower()== category:
                 total+= exp['amount']
+                results.append(exp)
                 found =True
                 
         if found:
-            print(f"Total expense for {category} is KSH {total}.")
+            view_expenses(results)
+            print(f"\nTotal expense for {category} is KSH {total}.")
         else:
             print("No expense in this category")
-        again =input("Search again ? yes/y or no/n: ").lower().strip()
-        if again in ["yes", "y"]:
-            continue
-        elif again in ["no", "n"]:
-            return
-        else:
-            print("Enter yes/y or no/n!")
+        while True:
+            again =input("Search again ? yes/y or no/n: ").lower().strip()
+            if again in ["yes", "y"]:
+                break #breaks from the inner loop to total menu
+            elif again in ["no", "n"]:
+                return #exits the entire loop
+            else:
+                print("Enter yes/y or no/n!")
             
             
             
@@ -235,12 +242,13 @@ def sort_menu(expenses):
             
         else:
            print("Enter an option 1,2,3,4,5,6,7! ")
-           
-        again = input("\nSort again? yes/y or no/n: ")
-        if again in ["yes", "y"]:
-            continue
-        elif again in ["no", "n"]:
-            return
-        else:
-            print("Enter yes/y or no/n!")
+        while True:
+
+            again = input("\nSort again? yes/y or no/n: ")
+            if again in ["yes", "y"]:
+                break #break out of this inner loop to the main looop
+            elif again in ["no", "n"]:
+                return #Exit to the sort menu
+            else:
+                print("Enter yes/y or no/n!")#print the warning and stays in this same loop
 

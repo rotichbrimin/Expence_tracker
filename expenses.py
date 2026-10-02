@@ -107,6 +107,7 @@ def update_expense(expenses):
 
     while True:
         search_update = input("\nEnter ID or name of expense to update: ").strip().lower()
+        search = []
         found = False
 
         for exp in expenses:
@@ -114,18 +115,21 @@ def update_expense(expenses):
             
             if search_update.isdigit() and int(search_update) == exp['id']:
                 found = True
+                search.append(exp)
 
             
             elif search_update == exp['name'].lower():
                 found = True
+                search.append(exp)
 
             if found:
-                print(f"\nID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount:{exp['amount']} | Date: {exp['date']}")
-
+                # print(f"\nID: {exp['id']} | Name: {exp['name']} | Category: {exp['category']} | Amount:{exp['amount']} | Date: {exp['date']}")
+                view_expenses(search)
                 print("\n1. Update Name")
                 print("2. Update Amount")
                 print("3. Update Date")
                 print("4. Update Category")
+                print("5. Back")
                 
                 while True:
 
@@ -134,7 +138,7 @@ def update_expense(expenses):
                     except ValueError:
                         print("Enter a valid option")
                         continue
-                    if choice in [1,2,3,4]:
+                    if choice in [1,2,3,4,5]:
                         break
                     else:
                         print("Invalid option!")
@@ -178,7 +182,9 @@ def update_expense(expenses):
                     print(f"New category updated to {new_category}")
                     save_data(expenses)
                     return
-
+                
+                elif choice == 5:
+                    break
 
                 else:
                     print("Invalid option")
